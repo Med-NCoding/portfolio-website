@@ -19,15 +19,23 @@ export default function Cursor() {
     if (!canvas) return
 
     const resize = () => {
-      canvas.width  = window.innerWidth
-      canvas.height = window.innerHeight
+      const dpr = window.devicePixelRatio || 1
+      const rect = canvas.getBoundingClientRect()
+      const w = rect.width || window.innerWidth
+      const h = rect.height || window.innerHeight
+      canvas.width  = Math.round(w * dpr)
+      canvas.height = Math.round(h * dpr)
     }
     resize()
     window.addEventListener('resize', resize)
 
     const onMouseMove = (e: MouseEvent) => {
       lastMove.current = Date.now()
-      points.current.push({ x: e.clientX, y: e.clientY })
+      const rect = canvas.getBoundingClientRect()
+      points.current.push({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      })
       if (points.current.length > TRAIL_LENGTH) points.current.shift()
     }
     window.addEventListener('mousemove', onMouseMove)
@@ -36,8 +44,11 @@ export default function Cursor() {
       const ctx = canvas.getContext('2d')
       if (!ctx) { rafId.current = requestAnimationFrame(draw); return }
 
+      const dpr = window.devicePixelRatio || 1
+
       // If cursor has been idle, wipe everything and wait
       if (Date.now() - lastMove.current > IDLE_TIMEOUT) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         points.current = []
         rafId.current = requestAnimationFrame(draw)
@@ -45,7 +56,9 @@ export default function Cursor() {
       }
 
       const pts = points.current
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
       if (pts.length < 2) { rafId.current = requestAnimationFrame(draw); return }
 
