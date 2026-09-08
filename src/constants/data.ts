@@ -116,22 +116,26 @@ export const EXPERIENCE: Job[] = [
 export const PROJECTS: Project[] = [
   {
     id: 'proj-1',
-    title: 'Deeplearning.AI Stanford Cert',
+    title: 'WireParity',
     bullets: [
-      'Full-stack Flask + React app, GitHub OAuth, Celery + Redis async tasks'
+      'Built a cross-language SDK testing tool that compares the HTTP requests produced by generated TypeScript, Python, and Go SDKs for equivalent API calls.',
+      'Implemented OpenAPI parsing, property-based input generation, request capture, normalization, and mismatch detection across query parameters, null handling, enums, dates, headers, and request bodies.',
+      'Developed automatic test-case shrinking and deterministic replay to reduce failing inputs to minimal reproducible examples and make SDK inconsistencies easier to debug.',
     ],
-    tech: ['Python', 'MongoDB', 'Jupyter'],
-    featured: true
+    tech: ['TypeScript', 'Node.js', 'OpenAPI', 'Vitest', 'fast-check'],
+    featured: true,
   },
   {
     id: 'proj-2',
-    title: 'Github Profile Analyzer',
+    title: 'TypeScript Software Renderer',
     bullets: [
-      '20+ language metrics, MOG showdown mode (10-metric comparison, score out of 100), recruiter mode for 5+ roles'
+      'Built a CPU-based 3D software renderer from scratch without WebGL or Three.js, implementing model-view-projection transforms, perspective projection, triangle rasterization, z-buffer depth testing, OBJ loading, and diffuse lighting.',
+      'Rendered a 588-triangle animated multi-object scene at 640×480 and 75 FPS with WASD and mouse camera controls, and supported OBJ meshes up to 968 triangles.',
+      'Reduced CPU render time by approximately 48%, from 2.45 ms to 1.27 ms per frame, in controlled benchmarks using screen-space back-face culling, preallocated vertex buffers, and optimized matrix transforms.',
     ],
-    tech: ['JS', 'HTML', 'CSS', 'React', 'Vite', 'Node', 'Groq'],
-    featured: true
-  }
+    tech: ['TypeScript', 'HTML Canvas', 'Vite', 'Vitest'],
+    featured: true,
+  },
 ];
 
 // ── Skills ───────────────────────────────────────────────────────
