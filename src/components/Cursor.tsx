@@ -2,15 +2,14 @@
 
 import { useEffect, useRef } from 'react'
 
-const TRAIL_LENGTH = 20
-const TRAIL_COLOR   = 'rgba(255, 255, 255, 0.75)'
-const IDLE_TIMEOUT  = 150 // ms before trail disappears
+const TRAIL_LENGTH = 18
+const IDLE_TIMEOUT = 120 // ms before trail disappears
 
 export default function Cursor() {
-  const canvasRef   = useRef<HTMLCanvasElement>(null)
-  const points      = useRef<{ x: number; y: number }[]>([])
-  const lastMove    = useRef<number>(0)
-  const rafId       = useRef<number>(0)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const points = useRef<{ x: number; y: number }[]>([])
+  const lastMove = useRef<number>(0)
+  const rafId = useRef<number>(0)
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -20,33 +19,33 @@ export default function Cursor() {
 
     const resize = () => {
       const dpr = window.devicePixelRatio || 1
-      const rect = canvas.getBoundingClientRect()
-      const w = rect.width || window.innerWidth
-      const h = rect.height || window.innerHeight
-      canvas.width  = Math.round(w * dpr)
+      const w = window.innerWidth
+      const h = window.innerHeight
+      canvas.width = Math.round(w * dpr)
       canvas.height = Math.round(h * dpr)
+      canvas.style.width = `${w}px`
+      canvas.style.height = `${h}px`
     }
     resize()
     window.addEventListener('resize', resize)
 
     const onMouseMove = (e: MouseEvent) => {
       lastMove.current = Date.now()
-      const rect = canvas.getBoundingClientRect()
-      points.current.push({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      })
+      points.current.push({ x: e.clientX, y: e.clientY })
       if (points.current.length > TRAIL_LENGTH) points.current.shift()
     }
     window.addEventListener('mousemove', onMouseMove)
 
     const draw = () => {
       const ctx = canvas.getContext('2d')
-      if (!ctx) { rafId.current = requestAnimationFrame(draw); return }
+      if (!ctx) {
+        rafId.current = requestAnimationFrame(draw)
+        return
+      }
 
       const dpr = window.devicePixelRatio || 1
 
-      // If cursor has been idle, wipe everything and wait
+      // If cursor has been idle, wipe canvas and reset points
       if (Date.now() - lastMove.current > IDLE_TIMEOUT) {
         ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -60,23 +59,32 @@ export default function Cursor() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
-      if (pts.length < 2) { rafId.current = requestAnimationFrame(draw); return }
+      if (pts.length < 2) {
+        rafId.current = requestAnimationFrame(draw)
+        return
+      }
 
-      const tail = pts[0]
+      // Draw trail segments with smooth fading opacity
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p1 = pts[i]
+        const p2 = pts[i + 1]
+        const progress = (i + 1) / (pts.length - 1)
+        ctx.beginPath()
+        ctx.moveTo(p1.x, p1.y)
+        ctx.lineTo(p2.x, p2.y)
+        ctx.strokeStyle = `rgba(255, 255, 255, ${(progress * 0.75).toFixed(3)})`
+        ctx.lineWidth = 1.5 + progress * 1.0
+        ctx.lineCap = 'round'
+        ctx.lineJoin = 'round'
+        ctx.stroke()
+      }
+
+      // Glowing light centered directly on the pointer
       const head = pts[pts.length - 1]
-      const grad = ctx.createLinearGradient(tail.x, tail.y, head.x, head.y)
-      grad.addColorStop(0, 'transparent')
-      grad.addColorStop(1, TRAIL_COLOR)
-
       ctx.beginPath()
-      ctx.moveTo(pts[0].x, pts[0].y)
-      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y)
-
-      ctx.strokeStyle = grad
-      ctx.lineWidth   = 2
-      ctx.lineCap     = 'round'
-      ctx.lineJoin    = 'round'
-      ctx.stroke()
+      ctx.arc(head.x, head.y, 2, 0, Math.PI * 2)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'
+      ctx.fill()
 
       rafId.current = requestAnimationFrame(draw)
     }

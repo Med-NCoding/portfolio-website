@@ -28,42 +28,47 @@ function Portfolio() {
 
 export default function Home() {
   const [entered, setEntered] = useState(false)
-  const [portfolioVisible, setPortfolioVisible] = useState(false)
+  const [isExiting, setIsExiting] = useState(false)
 
-  // Prevent browser scroll restoration and ensure page starts at top
+  // Disable browser automatic scroll restoration and force start at (0, 0)
   useEffect(() => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual'
     }
     window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
   }, [])
 
-  // Lock scrolling behind landing screen
+  // Lock scrolling while on the landing intro
   useEffect(() => {
     if (!entered) {
       window.scrollTo(0, 0)
-      const prevOverflow = document.body.style.overflow
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      const prevHtml = document.documentElement.style.overflow
+      const prevBody = document.body.style.overflow
+      document.documentElement.style.overflow = 'hidden'
       document.body.style.overflow = 'hidden'
       return () => {
-        document.body.style.overflow = prevOverflow
+        document.documentElement.style.overflow = prevHtml
+        document.body.style.overflow = prevBody
       }
     }
   }, [entered])
 
   function handleEnter() {
+    setIsExiting(true)
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    setPortfolioVisible(false)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+
     setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
       setEntered(true)
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-        requestAnimationFrame(() => {
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-          setPortfolioVisible(true)
-        })
-      })
-    }, 700)
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+    }, 600)
   }
 
   return (
@@ -71,16 +76,16 @@ export default function Home() {
       <Cursor />
       {!entered && <LandingIntro onEnter={handleEnter} />}
 
-      <div
-        style={{
-          opacity:    portfolioVisible ? 1 : 0,
-          transform:  portfolioVisible ? 'translateY(0)' : 'translateY(12px)',
-          transition: 'opacity 0.6s ease, transform 0.6s ease',
-          visibility:  entered ? 'visible' : 'hidden',
-        }}
-      >
-        <Portfolio />
-      </div>
+      {(entered || isExiting) && (
+        <div
+          style={{
+            opacity: 1,
+            transition: 'opacity 0.6s ease',
+          }}
+        >
+          <Portfolio />
+        </div>
+      )}
     </>
   )
 }

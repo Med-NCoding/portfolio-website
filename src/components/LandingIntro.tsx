@@ -52,7 +52,7 @@ export default function LandingIntro({ onEnter }: LandingIntroProps) {
 
   function handleEnter() {
     setExiting(true)
-    setTimeout(() => onEnter(), 700)
+    onEnter()
   }
 
   return (
