@@ -72,8 +72,8 @@ export const EDUCATION: Education = {
   degree: 'Bachelor of Mathematics',
   program: 'Mathematics',
   faculty: 'Faculty of Mathematics',
-  intake: 'Fall 2026',
-  expectedGrad: 'Spring 2030',
+  intake: 'Sept 2026',
+  expectedGrad: 'Aug 2031',
   coursework: [
     'Calculus I & II',
     'Linear Algebra',

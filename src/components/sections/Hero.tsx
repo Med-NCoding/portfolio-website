@@ -30,7 +30,7 @@ export default function Hero() {
 
       {/* One-liner */}
       <p className="text-text-muted mb-1" style={{ fontSize: '18px', fontWeight: 500 }}>
-        Mathematics · University of Waterloo · Fall 2026
+        Mathematics · University of Waterloo
       </p>
 
       {/* Passion */}
