@@ -90,7 +90,7 @@ export const EXPERIENCE: Job[] = [
     company: 'Daffodil Dressup',
     role: 'iOS Developer Intern',
     dateRange: 'May–Aug 2025',
-    location: 'Atlanta GA',
+    location: 'Atlanta, GA (Remote)',
     bullets: [
       'Full-scale iOS app in SwiftUI, 120+ clothing options, UI mirroring website aesthetic',
       'Category filtering, featured products, cart, click impressions with AI'
@@ -102,7 +102,7 @@ export const EXPERIENCE: Job[] = [
     company: 'Magic Hour',
     role: 'Growth Engineer Intern',
     dateRange: 'Aug–Sept 2025',
-    location: 'Mississauga ON',
+    location: 'San Francisco, CA (Remote)',
     bullets: [
       'Developing a Typescript and python web application for renovation service providers that converts customer project details into structured detailed prompts optimized for the Magic Hour API.',
       'Shipped projects that showcased practical Magic Hour use cases, helping attract developers and grow adoption of the API.'
