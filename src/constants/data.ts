@@ -99,16 +99,15 @@ export const EXPERIENCE: Job[] = [
   },
   {
     id: 'exp-2',
-    company: 'Robotics & ML Apprenticeship',
-    role: 'Robotics & ML Apprentice',
+    company: 'Magic Hour',
+    role: 'Growth Engineer Intern',
     dateRange: 'Aug–Sept 2025',
     location: 'Mississauga ON',
     bullets: [
-      'Observed robotic medication dispensing workflows',
-      'Studied foundational ML: AI doc processing, summarization, workflow automation',
-      'Built AI PDF analysis prototype using LLM-based summarization'
+      'Developing a Typescript and python web application for renovation service providers that converts customer project details into structured detailed prompts optimized for the Magic Hour API.',
+      'Shipped projects that showcased practical Magic Hour use cases, helping attract developers and grow adoption of the API.'
     ],
-    tags: ['Robotics', 'Machine Learning', 'AI']
+    tags: ['TypeScript', 'Python', 'API']
   }
 ];
 
