@@ -101,7 +101,7 @@ export const EXPERIENCE: Job[] = [
     id: 'exp-2',
     company: 'Magic Hour',
     role: 'Growth Engineer Intern',
-    dateRange: 'Aug–Sept 2025',
+    dateRange: 'Sept 2026 – Present',
     location: 'San Francisco, CA (Remote)',
     bullets: [
       'Developing a Typescript and python web application for renovation service providers that converts customer project details into structured detailed prompts optimized for the Magic Hour API.',
