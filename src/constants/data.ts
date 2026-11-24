@@ -27,6 +27,7 @@ export interface Education {
 export interface Job {
   id: string;
   company: string;
+  logo?: string;
   role: string;
   dateRange: string;
   location: string;
@@ -91,6 +92,7 @@ export const EXPERIENCE: Job[] = [
   {
     id: 'exp-1',
     company: 'Daffodil Dressup',
+    logo: '/logos/daffodil-dressup.png',
     role: 'iOS Developer Intern',
     dateRange: 'May–Aug 2025',
     location: 'Atlanta, GA (Remote)',
@@ -103,6 +105,7 @@ export const EXPERIENCE: Job[] = [
   {
     id: 'exp-2',
     company: 'Magic Hour',
+    logo: '/logos/magic-hour.png',
     role: 'Growth Engineer Intern',
     dateRange: 'Sept 2026 – Present',
     location: 'San Francisco, CA (Remote)',
@@ -116,6 +119,17 @@ export const EXPERIENCE: Job[] = [
 
 // ── Projects ─────────────────────────────────────────────────────
 export const PROJECTS: Project[] = [
+  {
+    id: 'proj-3',
+    title: 'Liquid Regression Finder',
+    bullets: [
+      'Built a differential testing CLI for Shopify themes, comparing Git baselines against working-tree edits through the official Ruby Liquid engine to detect DOM badge regressions.',
+      'Coordinated Node.js and Python processes to find multi-variant regressions in under 9 search iterations; implemented delta debugging to reduce failing fixtures from 8 variants to 1–2 with simplified boundary prices and deterministic JSON replay bundles.',
+      'Implemented debounced file watching for checks in approximately 1.2 seconds on save, verified across 12 isolated test suites.',
+    ],
+    tech: ['TypeScript', 'Node.js', 'Python', 'Ruby'],
+    featured: true,
+  },
   {
     id: 'proj-1',
     title: 'WireParity',

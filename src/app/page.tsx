@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Cursor from '@/components/Cursor'
 import { PERSON, EDUCATION, EXPERIENCE, PROJECTS, SKILLS, CONTACT, Project, Job } from '@/constants/data'
 
@@ -18,13 +19,17 @@ const WORK_SUMMARIES: Record<string, { label: string; summary: string }> = {
 }
 
 const PROJECT_SUMMARIES: Record<string, { label: string; summary: string }> = {
+  'proj-3': {
+    label: 'cli tool',
+    summary: 'Differential testing CLI for Shopify themes — finds multi-variant regressions in <9 iterations (~1.2s on save) and delta-debugs 8 variants down to 1–2',
+  },
   'proj-1': {
     label: 'sdk tool',
-    summary: 'Cross-language SDK parity tester across TypeScript, Python, and Go',
+    summary: 'Cross-language SDK testing tool using OpenAPI and property-based generation to catch HTTP mismatches across TypeScript, Python, and Go SDKs. Adds automatic test-case shrinking and deterministic replay for minimal reproducible failures.',
   },
   'proj-2': {
     label: 'graphics',
-    summary: 'CPU 3D rasterizer & MVP pipeline built from scratch (no WebGL)',
+    summary: 'CPU-based 3D renderer from scratch (no WebGL/Three.js) rendering a 588-triangle scene at 640×480 and 75 FPS. Cut CPU render time by 48% (2.45 ms → 1.27 ms/frame) across 14 passing Vitest tests.',
   },
 }
 
@@ -182,11 +187,22 @@ export default function Home() {
                       <div className="leading-relaxed">
                         <button
                           onClick={() => openJobModal(job)}
-                          className="group inline-flex items-baseline text-left gap-1.5 text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors"
+                          className="group inline-flex flex-wrap items-center text-left gap-x-1.5 gap-y-0.5 text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors"
                         >
                           <span>{job.role.toLowerCase()} at</span>
-                          <span className="font-medium underline decoration-[var(--rule)] underline-offset-4 group-hover:decoration-[var(--accent)]">
-                            {job.company}
+                          <span className="inline-flex items-center gap-1.5">
+                            {job.logo && (
+                              <Image
+                                src={job.logo}
+                                alt={`${job.company} logo`}
+                                width={16}
+                                height={16}
+                                className="inline-block w-4 h-4 rounded-[3px] object-cover shrink-0"
+                              />
+                            )}
+                            <span className="font-medium underline decoration-[var(--rule)] underline-offset-4 group-hover:decoration-[var(--accent)]">
+                              {job.company}
+                            </span>
                           </span>
                           <span className="text-xs text-[var(--text-dim)] font-mono ml-0.5">↗</span>
                         </button>
@@ -287,14 +303,6 @@ export default function Home() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href={PERSON.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs sm:text-sm font-mono text-[var(--accent)] hover:underline underline-offset-4 decoration-[var(--accent)] transition-colors"
-              >
-                resume
-              </a>
             </div>
           </footer>
 
