@@ -10,6 +10,8 @@ export interface PersonInfo {
   tagline: string;
   bio: string[];
   resumeUrl: string;
+  location: string;
+  email: string;
 }
 
 export interface Education {
@@ -59,9 +61,10 @@ export const PERSON: PersonInfo = {
   firstName: 'Medhansh',
   title: 'Math Student & Software Developer',
   tagline: 'Building things at the intersection of math and software.',
+  location: 'Waterloo, ON',
+  email: 'medhanshnegi4@gmail.com',
   bio: [
-    'I\'m Medhansh — a Bachelor of Mathematics student at the University of Waterloo (Fall 2026 intake), passionate about algorithms, data-driven products, and clean software design.',
-    'I love turning abstract ideas into real, working systems — from analysing datasets to shipping full-stack applications. Currently exploring competitive programming, ML fundamentals, and modern web development.',
+    'I study mathematics at the University of Waterloo. I work on software engineering and machine learning, turning theoretical ideas into fast, reliable systems. Currently exploring AI logic, compilers, and modern web infrastructure.',
   ],
   resumeUrl: '/resume.pdf',
 };
@@ -164,12 +167,12 @@ export const SKILLS: SkillGroup[] = [
 // ── Contact ──────────────────────────────────────────────────────
 export const CONTACT: ContactLink[] = [
   {
-    label: 'GitHub',
+    label: 'github',
     href: 'https://github.com/Med-NCoding',
     icon: 'github',
   },
   {
-    label: 'LinkedIn',
+    label: 'linkedin',
     href: 'https://www.linkedin.com/in/medhansh-negi-22204a367/',
     icon: 'linkedin',
   },
